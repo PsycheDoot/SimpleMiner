@@ -1,0 +1,2 @@
+# SimpleMiner
+RS Bot
