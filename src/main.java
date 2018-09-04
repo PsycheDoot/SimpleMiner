@@ -29,9 +29,12 @@ public class main extends AbstractScript {
 		none
 	}
 	
+	private short[] Copper = {4645};
+	private short[] Tin = {53};
+	
 	private State currentState = State.waiting;
 	private GameObject target = null;
-	private OreType targetOre = OreType.none;
+	private OreType targetOre = OreType.copper;
 	
 	// Global script methods
 	public void onStart() {
@@ -104,9 +107,11 @@ public class main extends AbstractScript {
 	}
 	
 	private GameObject getNearestOre(OreType type) {
+		
 		GameObject ore = getGameObjects().closest(gameObject -> gameObject != null
-													&& gameObject.getName().equals("Rocks") 
+													&& gameObject.getName().equals("Rocks")
 													&& gameObject.getModelColors() != null
+													&& gameObject.getModelColors()[0] == getOreColor(type)[0]
 													&& gameObject.hasAction("Mine"));
 		
 		//log(ore.toString());
@@ -115,5 +120,16 @@ public class main extends AbstractScript {
 	
 	private boolean hasEnoughOre() {
 		return getInventory().isFull();
+	}
+	
+	private short[] getOreColor(OreType type) {
+		switch(type) {
+			case copper:
+				return Copper;
+			case tin:
+				return Tin;
+			default:
+				return Copper;
+		}
 	}
 }
